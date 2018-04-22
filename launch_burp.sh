@@ -12,16 +12,17 @@ then
 	then
 		FOLDER=$4
 	fi
+	PROJECT=$2.burpprj
 
 	if [[ -n $5 ]]
 	then
 		EMAIL=$5
 		echo Launching Scan against $1://$2:$3$4 EMailing reports to $5
-		java -jar -Xmx1024m ../burp_suite/burpsuite_pro_v1.6.02.jar $SCHEME $FQDN $PORT $FOLDER
+		java -jar -Xmx1024m /opt/BurpSuitePro/burp/burpsuite_pro_1.7.33-18.jar $SCHEME $FQDN $PORT $FOLDER --project-file=$PROJECT --unpause-spider-and-scanner
 		echo 'Your scan results are attached to this email. Please visit https://www.integrissecurity.com/index.php?resources=Carbonator for more information.' | mutt -s 'Integris Security Carbonator Results' $5 -a IntegrisSecurity_Carbonator_$1_$2_$3.html && rm IntegrisSecurity_Carbonator_$1_$2_$3.html
 	else
 		echo Launching Scan against $1://$2:$3$4
-		java -jar -Xmx1024m ../burp_suite/burpsuite_pro_v1.6.02.jar $SCHEME $FQDN $PORT $FOLDER
+		java -jar -Xmx1024m /opt/BurpSuitePro/burp/burpsuite_pro_1.7.33-18.jar $SCHEME $FQDN $PORT $FOLDER --project-file=$PROJECT --unpause-spider-and-scanner
 	fi
 else
 	echo Usage: $0 scheme fqdn port path email
